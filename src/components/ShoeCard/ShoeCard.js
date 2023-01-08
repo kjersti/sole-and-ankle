@@ -81,6 +81,7 @@ const ShoeCard = ({
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {variant==='onSale' ? <SalePrice>{salePrice}</SalePrice> : null }
         </Row>
       </Wrapper>
     </Link>
@@ -103,6 +104,7 @@ const ImageWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  border-radius: 16px 16px 4px 4px;
 `;
 
 const Row = styled.div`
