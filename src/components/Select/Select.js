@@ -13,7 +13,7 @@ const Select = ({ label, value, children, ...delegated }) => {
   const displayedValue = selectedChild.props.children;
 
   return (
-    <Wrapper>
+    <Wrapper {...delegated}>
       <VisibleLabel>{label}</VisibleLabel>
 
       <SelectWrapper>

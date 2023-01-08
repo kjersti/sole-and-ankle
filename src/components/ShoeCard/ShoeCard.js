@@ -5,6 +5,43 @@ import { COLORS, WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
 
+const Variants = {
+  default: {
+    'label': '',
+    'background': 'inherit',
+    'color': 'inherit'
+  },
+  onSale: {
+    'label': 'Sale',
+    'background': COLORS.primary,
+    'color': COLORS.white
+  },
+  newRelease: {
+    'label': 'Just Released!',
+    'background': COLORS.secondary,
+    'color': COLORS.white
+  }
+}
+
+const VariantLabel = ({ variant }) => {
+  const styledVariant = Variants[variant]; 
+  
+  return <VariantWrapper style={styledVariant}>{styledVariant.label}</VariantWrapper>
+};
+
+const VariantWrapper = styled.div`
+  background: {p => p.background};
+  color: {p => p.color};
+  padding: 6px 8px 6px 10px;
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  border-radius: 2px;
+  z-index: 2;  
+  font-size: ${14 / 16}rem;
+  font-weight: ${WEIGHTS.medium};
+`;
+
 const ShoeCard = ({
   slug,
   name,
@@ -26,14 +63,14 @@ const ShoeCard = ({
   // will triumph and be the variant used.
   // prettier-ignore
   const variant = typeof salePrice === 'number'
-    ? 'on-sale'
+    ? 'onSale'
     : isNewShoe(releaseDate)
-      ? 'new-release'
+      ? 'newRelease'
       : 'default'
-
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
+        <VariantLabel variant={variant}></VariantLabel>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
@@ -53,18 +90,25 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  flex: 1 0 340px;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  position: relative;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
